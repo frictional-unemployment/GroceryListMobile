@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import List from './src/components/List/List';
@@ -11,8 +10,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Navigator>
-        <Screen component={ListOfLists} />
-        <Screen component={List} />
+        <Screen name="ListOfLists" component={ListOfLists} />
+        <Screen name="List" component={List} />
       </Navigator>
     </NavigationContainer>
   );
