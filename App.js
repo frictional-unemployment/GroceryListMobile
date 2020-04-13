@@ -10,8 +10,19 @@ export default function App() {
   return (
     <NavigationContainer>
       <Navigator>
+        <Screen
+          name="List"
+          component={List}
+          initialParams={
+            {
+              listData: {
+                listName: 'defaultListName',
+                items: [{ name: 'item1', qty: '0', purchased: false }, { name: 'item2', qty: '0', purchased: false }, { name: 'item3', qty: '0', purchased: false }]
+              }
+            }
+          }
+        />
         <Screen name="ListOfLists" component={ListOfLists} />
-        <Screen name="List" component={List} />
       </Navigator>
     </NavigationContainer>
   );
