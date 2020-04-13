@@ -1,24 +1,43 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, TextInput } from 'react-native';
 import Item from './Item/Item';
 
-const List = ({ route, navigation }) => {
-  const { items, listName } = route.params?.listData;
+class List extends React.Component {
 
-  useEffect(() => {
+  componentDidMount() {
+    const { navigation, route } = this.props;
+    console.log('This is list data', route.params.listData);
     navigation.setOptions({
-      title: listName
+      title: route.params.listData.listName
     });
-  });
+  }
 
-  return (
-    <View>
-      <Text>Test</Text>
-      {
-        items.map(({ name, qty }) => (<Item name={name} qty={qty} />))
-      }
-    </View>
-  );
-};
+  componentDidUpdate() {
+    const { navigation, route } = this.props;
+    console.log('This is list data', route.params.listData);
+    navigation.setOptions({
+      title: route.params.listData.listName
+    });
+  }
+
+  changeListName(newName) {
+    const { navigation, route } = this.props;
+    const newListData = { ...route.params.listData };
+    newListData.listName = newName;
+    navigation.setParams({ listData: newListData });
+  }
+
+  render() {
+    const { route: { params: { listData: { items = [] } } } } = this.props;
+    return (
+      <View>
+        <Text>Test</Text>
+        {
+          items.map(({ name, qty }, index) => (<Item name={name} qty={qty} key={index} />))
+        }
+      </View>
+    );
+  }
+}
 
 export default List;
