@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Modal, View, Text } from 'react-native';
+import {
+  Button, Modal, View, Text
+} from 'react-native';
 import Item from './Item/Item';
 import NewNameForm from './Forms/NewNameForm';
 import NewItemForm from './Forms/NewItemForm';
@@ -15,24 +17,21 @@ class List extends React.Component {
 
   componentDidMount() {
     const { navigation, route } = this.props;
-    console.log('This is list data', route.params.listData);
     navigation.setOptions({
       title: route.params.listData.listName,
-      headerRight: () => {
-        return (
-          <Button
-            title="Change List Name"
-            onPress={() => this.changeNewNameVisible(true)}
-            color="green"
-          />
-        );
-      },
+      headerRight: () => (
+        <Button
+          title="Change List Name"
+          onPress={() => this.changeNewNameVisible(true)}
+          color="green"
+        />
+      )
+
     });
   }
 
   componentDidUpdate() {
     const { navigation, route } = this.props;
-    console.log('This is list data', route.params.listData);
     navigation.setOptions({
       title: route.params.listData.listName
     });
@@ -68,16 +67,35 @@ class List extends React.Component {
     const item = { name, qty, purchased: false };
     const newListData = { ...route.params.listData };
     newListData.items.push(item);
-    navigation.setParams({ listData: newListData});
+    navigation.setParams({ listData: newListData });
+  }
+
+  togglePurchased(index) {
+    const { navigation, route } = this.props;
+    const newListData = { ...route.params.listData };
+    newListData.items[index].purchased = !newListData.items[index].purchased;
+    navigation.setParams({ listData: newListData });
+
+    // this.forceUpdate();
   }
 
   render() {
     const { route: { params: { listData: { items = [] } } } } = this.props;
+    const { newNameVisible, newItemVisible } = this.state;
+
     return (
       <View>
         <Text>Test</Text>
         {
-          items.map(({ name, qty }, index) => (<Item name={name} qty={qty} key={index} />))
+          items.map(({ name, qty, purchased }, index) => (
+            <Item
+              name={name}
+              qty={qty}
+              purchased={purchased}
+              key={index}
+              togglePurchased={() => this.togglePurchased(index)}
+            />
+          ))
         }
         <Button
           title="Add New Item"
@@ -85,7 +103,7 @@ class List extends React.Component {
           color="green"
         />
         <Modal
-          visible={this.state.newNameVisible}
+          visible={newNameVisible}
         >
           <NewNameForm
             commitNewName={(name) => this.changeListName(name)}
@@ -93,7 +111,7 @@ class List extends React.Component {
           />
         </Modal>
         <Modal
-          visible={this.state.newItemVisible}
+          visible={newItemVisible}
         >
           <NewItemForm
             commitNewItem={(item) => this.addNewItem(item)}

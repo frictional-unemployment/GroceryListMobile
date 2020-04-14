@@ -2,16 +2,27 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
-const List = ({ name, qty }) => {
+const List = ({
+  name, qty, purchased, togglePurchased
+}) => {
+  const purchasedStyle = [styles.item];
+
+  if (purchased === true) {
+    purchasedStyle.push({ backgroundColor: 'grey' });
+  } else if (purchased === false) {
+    purchasedStyle.push({ backgroundColor: 'white' });
+  }
 
   return (
     <TouchableHighlight
-      style={styles.item}
+      style={purchasedStyle}
       onLongPress={() => {
         console.log('long pres');
         console.log('longPress');
       }}
-      onPress={() => console.log('short press')}
+      onPress={() => {
+        togglePurchased();
+      }}
     >
       <View style={styles.item}>
         <Text style={styles.itemName}>
@@ -26,7 +37,7 @@ const List = ({ name, qty }) => {
   );
 };
 
-const styles = {
+let styles = {
   item: {
     height: 50,
     borderWidth: 1,
