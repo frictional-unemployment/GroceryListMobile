@@ -1,13 +1,15 @@
 import React from 'react';
-import { Button, Modal, View, Text, TextInput } from 'react-native';
+import { Button, Modal, View, Text } from 'react-native';
 import Item from './Item/Item';
 import NewNameForm from './Forms/NewNameForm';
+import NewItemForm from './Forms/NewItemForm';
 
 class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newNameVisible: false
+      newNameVisible: false,
+      newItemVisible: false
     };
   }
 
@@ -42,6 +44,12 @@ class List extends React.Component {
     });
   }
 
+  changeNewItemVisible(visibility) {
+    this.setState({
+      newItemVisible: visibility
+    });
+  }
+
   changeListName(newName) {
     if (newName.canceled) {
       return;
@@ -52,6 +60,17 @@ class List extends React.Component {
     navigation.setParams({ listData: newListData });
   }
 
+  addNewItem({ name, qty = 1, canceled }) {
+    if (canceled) {
+      return;
+    }
+    const { navigation, route } = this.props;
+    const item = { name, qty, purchased: false };
+    const newListData = { ...route.params.listData };
+    newListData.items.push(item);
+    navigation.setParams({ listData: newListData});
+  }
+
   render() {
     const { route: { params: { listData: { items = [] } } } } = this.props;
     return (
@@ -60,12 +79,25 @@ class List extends React.Component {
         {
           items.map(({ name, qty }, index) => (<Item name={name} qty={qty} key={index} />))
         }
+        <Button
+          title="Add New Item"
+          onPress={() => this.changeNewItemVisible(true)}
+          color="green"
+        />
         <Modal
           visible={this.state.newNameVisible}
         >
           <NewNameForm
             commitNewName={(name) => this.changeListName(name)}
             closeModal={() => this.changeNewNameVisible(false)}
+          />
+        </Modal>
+        <Modal
+          visible={this.state.newItemVisible}
+        >
+          <NewItemForm
+            commitNewItem={(item) => this.addNewItem(item)}
+            closeModal={() => this.changeNewItemVisible(false)}
           />
         </Modal>
       </View>
