@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const newItemForm = (props) => {
   const [name, setName] = React.useState('');
@@ -7,7 +7,14 @@ const newItemForm = (props) => {
   const [warningVisible, setWarningVisible] = React.useState(false);
 
   return (
-    <View>
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor: 'yellow',
+        height: '100%'
+      }}
+    >
       <Text>
         Enter item name:
       </Text>
@@ -36,6 +43,7 @@ const newItemForm = (props) => {
         keyboardType="number-pad"
       />
       <Button
+        style={styles.button}
         onPress={() => {
           if (name.trim().length === 0) {
             setWarningVisible(true);
@@ -46,7 +54,15 @@ const newItemForm = (props) => {
         }}
         title="Add Item"
       />
+      <TouchableOpacity>
+        <Text
+          style={styles.buttonText}
+        >
+          Add Item
+        </Text>
+      </TouchableOpacity>
       <Button
+        style={styles.button}
         color="red"
         onPress={() => {
           props.commitNewItem({ canceled: true });
@@ -63,7 +79,14 @@ const styles = {
     width: '50%',
     height: 30,
     borderWidth: 1,
-    borderColor: 'black'
+    borderColor: 'black',
+    alignItems: 'center'
+  },
+  button: {
+    width: '100%'
+  },
+  buttonText: {
+    color: 'white'
   }
 };
 
