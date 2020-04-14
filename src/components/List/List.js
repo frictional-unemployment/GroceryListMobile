@@ -1,14 +1,30 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { Button, Modal, View, Text, TextInput } from 'react-native';
 import Item from './Item/Item';
+import NewNameForm from './Forms/NewNameForm';
 
 class List extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newNameVisible: false
+    };
+  }
 
   componentDidMount() {
     const { navigation, route } = this.props;
     console.log('This is list data', route.params.listData);
     navigation.setOptions({
-      title: route.params.listData.listName
+      title: route.params.listData.listName,
+      headerRight: () => {
+        return (
+          <Button
+            title="Change List Name"
+            onPress={() => this.changeNewNameVisible(true)}
+            color="green"
+          />
+        );
+      },
     });
   }
 
@@ -20,10 +36,19 @@ class List extends React.Component {
     });
   }
 
+  changeNewNameVisible(visibility) {
+    this.setState({
+      newNameVisible: visibility
+    });
+  }
+
   changeListName(newName) {
+    if (newName.canceled) {
+      return;
+    }
     const { navigation, route } = this.props;
     const newListData = { ...route.params.listData };
-    newListData.listName = newName;
+    newListData.listName = newName.name;
     navigation.setParams({ listData: newListData });
   }
 
@@ -35,6 +60,14 @@ class List extends React.Component {
         {
           items.map(({ name, qty }, index) => (<Item name={name} qty={qty} key={index} />))
         }
+        <Modal
+          visible={this.state.newNameVisible}
+        >
+          <NewNameForm
+            commitNewName={(name) => this.changeListName(name)}
+            closeModal={() => this.changeNewNameVisible(false)}
+          />
+        </Modal>
       </View>
     );
   }
