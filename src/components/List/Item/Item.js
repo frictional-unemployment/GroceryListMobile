@@ -38,11 +38,9 @@ const styles = {
   },
   itemName: {
     fontWeight: 'bold',
-    justifySelf: 'start'
   },
   itemQty: {
     fontWeight: 'bold',
-    justifySelf: 'end'
   },
   touch: {
     width: 100,
