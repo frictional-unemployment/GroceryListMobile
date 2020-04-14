@@ -26,7 +26,6 @@ const newItemForm = (props) => {
         warningVisible ? (
           <Text
             style={{
-              visible: warningVisible,
               color: 'red'
             }}
           >
@@ -42,8 +41,8 @@ const newItemForm = (props) => {
         onChangeText={(text) => setQty(text)}
         keyboardType="number-pad"
       />
-      <Button
-        style={styles.button}
+      <TouchableOpacity
+        style={[styles.button, styles.blue]}
         onPress={() => {
           if (name.trim().length === 0) {
             setWarningVisible(true);
@@ -52,24 +51,26 @@ const newItemForm = (props) => {
           props.commitNewItem({ name, qty });
           props.closeModal();
         }}
-        title="Add Item"
-      />
-      <TouchableOpacity>
+      >
         <Text
           style={styles.buttonText}
         >
-          Add Item
+          ADD ITEM
         </Text>
       </TouchableOpacity>
-      <Button
-        style={styles.button}
-        color="red"
+      <TouchableOpacity
+        style={[styles.button, styles.red]}
         onPress={() => {
           props.commitNewItem({ canceled: true });
           props.closeModal();
         }}
-        title="Cancel"
-      />
+      >
+        <Text
+          style={styles.buttonText}
+        >
+          CANCEL
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -83,10 +84,29 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    width: '100%'
+    width: '75%',
+    borderRadius: 2,
+    height: 50,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
+
+    elevation: 15,
+  },
+  blue: {
+    backgroundColor: 'blue'
+  },
+  red: {
+    backgroundColor: 'red'
   },
   buttonText: {
-    color: 'white'
+    color: 'white',
+    textAlign: 'center',
   }
 };
 
