@@ -26,7 +26,11 @@ const List = ({
       activeOpacity={0.2}
     >
       <View style={[styles.item, purchased ? styles.purchased : styles.unPurchased]}>
-        <Text style={[styles.itemName, purchased ? styles.purchased : styles.unPurchased]}>
+        <Text
+          style={[styles.itemName, purchased ? styles.purchased : styles.unPurchased]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {name}
         </Text>
         <Text style={[styles.itemQty, purchased ? styles.purchased : styles.unPurchased]}>
@@ -43,6 +47,7 @@ const List = ({
 
 let styles = StyleSheet.create({
   item: {
+    // height: '25%',
     height: 50,
     borderWidth: 1,
     borderColor: 'white',
@@ -55,15 +60,16 @@ let styles = StyleSheet.create({
   },
   itemName: {
     height: '100%',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     fontSize: 30,
     overflow: 'hidden',
     left: '25%',
-    backgroundColor: 'green'
+    backgroundColor: 'green',
+    width: '70%'
   },
   itemQty: {
     height: '100%',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginLeft: 'auto',
     fontSize: 30,
     right: '25%'
