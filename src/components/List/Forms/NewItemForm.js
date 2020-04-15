@@ -3,7 +3,7 @@ import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const newItemForm = (props) => {
   const [name, setName] = React.useState('');
-  const [qty, setQty] = React.useState(-1);
+  const [qty, setQty] = React.useState(1);
   const [warningVisible, setWarningVisible] = React.useState(false);
 
   return (

@@ -91,7 +91,7 @@ class List extends React.Component {
       const { navigation, route } = this.props;
       const newListData = { ...route.params.listData };
       newListData.items[index].name = name;
-      newListData.items[index].qty = qty;
+      newListData.items[index].qty = qty || 1;
       navigation.setParams({ listData: newListData });
     }
     this.setState({
