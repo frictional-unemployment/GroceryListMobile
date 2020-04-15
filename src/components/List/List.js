@@ -100,6 +100,18 @@ class List extends React.Component {
     });
   }
 
+  deleteItem(index) {
+    const { navigation, route } = this.props;
+    const newListData = { ...route.params.listData };
+    newListData.items[index].items = newListData.items.splice(index, 1);
+    navigation.setParams({ listData: newListData });
+
+    this.setState({
+      editItemVisible: false,
+      editItemIndex: -1
+    });
+  }
+
   render() {
     const { route: { params: { listData: { items = [] } } } } = this.props;
     const { newNameVisible, newItemVisible, editItemVisible, editItemIndex } = this.state;
@@ -114,9 +126,7 @@ class List extends React.Component {
               purchased={purchased}
               key={index}
               togglePurchased={() => this.togglePurchased(index)}
-              startEdit={() => {
-                this.changeEditItemVisible(true, index);
-              }}
+              startEdit={() => this.changeEditItemVisible(true, index)}
             />
           ))
         }
@@ -151,6 +161,7 @@ class List extends React.Component {
             index={editItemIndex}
             item={items[editItemIndex]}
             saveChanges={(item) => this.editItem(item)}
+            deleteItem={() => this.deleteItem(editItemIndex)}
           />
         </Modal>
       </View>

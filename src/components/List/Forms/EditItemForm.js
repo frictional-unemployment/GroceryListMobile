@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-const editItemForm = ({ index, item: { name, qty }, saveChanges }) => {
+const editItemForm = ({ index, item: { name, qty }, saveChanges, deleteItem }) => {
   const [newName, setNewName] = useState(name);
   const [newQty, setNewQty] = useState(qty);
 
@@ -69,6 +69,19 @@ const editItemForm = ({ index, item: { name, qty }, saveChanges }) => {
           style={styles.buttonText}
         >
           RESET
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, styles.red]}
+        onPress={() => {
+          console.log('button pressed!');
+          deleteItem();
+        }}
+      >
+        <Text
+          style={styles.buttonText}
+        >
+          DELETE
         </Text>
       </TouchableOpacity>
     </View>
