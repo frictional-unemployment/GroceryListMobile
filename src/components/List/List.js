@@ -127,6 +127,7 @@ class List extends React.Component {
         />
         <Modal
           visible={newNameVisible}
+          onRequestClose={() => this.changeNewNameVisible(false)}
         >
           <NewNameForm
             commitNewName={(name) => this.changeListName(name)}
@@ -135,6 +136,7 @@ class List extends React.Component {
         </Modal>
         <Modal
           visible={newItemVisible}
+          onRequestClose={() => this.changeNewItemVisible(false)}
         >
           <NewItemForm
             commitNewItem={(item) => this.addNewItem(item)}

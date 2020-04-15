@@ -51,7 +51,7 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     flexWrap: 'nowrap',
-    position: 'relative'
+    position: 'relative',
   },
   itemName: {
     height: '100%',
