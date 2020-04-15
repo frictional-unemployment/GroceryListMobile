@@ -8,12 +8,7 @@ const newItemForm = (props) => {
 
   return (
     <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        // backgroundColor: 'yellow',
-        height: '100%'
-      }}
+      style={styles.container}
     >
       <Text>
         Enter item name:
@@ -76,6 +71,11 @@ const newItemForm = (props) => {
 };
 
 const styles = {
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%'
+  },
   textInput: {
     width: '50%',
     height: 30,
