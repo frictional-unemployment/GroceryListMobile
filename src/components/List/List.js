@@ -1,17 +1,20 @@
 import React from 'react';
 import {
-  Button, Modal, View, Text
+  Button, Modal, View
 } from 'react-native';
 import Item from './Item/Item';
 import NewNameForm from './Forms/NewNameForm';
 import NewItemForm from './Forms/NewItemForm';
+import EditItemForm from './Forms/EditItemForm';
 
 class List extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       newNameVisible: false,
-      newItemVisible: false
+      newItemVisible: false,
+      editItemVisible: false,
+      editItemIndex: -1
     };
   }
 
@@ -26,7 +29,6 @@ class List extends React.Component {
           color="green"
         />
       )
-
     });
   }
 
@@ -46,6 +48,13 @@ class List extends React.Component {
   changeNewItemVisible(visibility) {
     this.setState({
       newItemVisible: visibility
+    });
+  }
+
+  changeEditItemVisible(visibility, index) {
+    this.setState({
+      editItemVisible: visibility,
+      editItemIndex: index
     });
   }
 
@@ -75,17 +84,28 @@ class List extends React.Component {
     const newListData = { ...route.params.listData };
     newListData.items[index].purchased = !newListData.items[index].purchased;
     navigation.setParams({ listData: newListData });
+  }
 
-    // this.forceUpdate();
+  editItem({ index, name, qty, canceled }) {
+    if (!canceled) {
+      const { navigation, route } = this.props;
+      const newListData = { ...route.params.listData };
+      newListData.items[index].name = name;
+      newListData.items[index].qty = qty;
+      navigation.setParams({ listData: newListData });
+    }
+    this.setState({
+      editItemVisible: false,
+      editItemIndex: -1
+    });
   }
 
   render() {
     const { route: { params: { listData: { items = [] } } } } = this.props;
-    const { newNameVisible, newItemVisible } = this.state;
+    const { newNameVisible, newItemVisible, editItemVisible, editItemIndex } = this.state;
 
     return (
       <View>
-        <Text>Test</Text>
         {
           items.map(({ name, qty, purchased }, index) => (
             <Item
@@ -94,6 +114,9 @@ class List extends React.Component {
               purchased={purchased}
               key={index}
               togglePurchased={() => this.togglePurchased(index)}
+              startEdit={() => {
+                this.changeEditItemVisible(true, index);
+              }}
             />
           ))
         }
@@ -116,6 +139,16 @@ class List extends React.Component {
           <NewItemForm
             commitNewItem={(item) => this.addNewItem(item)}
             closeModal={() => this.changeNewItemVisible(false)}
+          />
+        </Modal>
+        <Modal
+          visible={editItemVisible}
+          onRequestClose={() => this.changeEditItemVisible(false, -1)}
+        >
+          <EditItemForm
+            index={editItemIndex}
+            item={items[editItemIndex]}
+            saveChanges={(item) => this.editItem(item)}
           />
         </Modal>
       </View>

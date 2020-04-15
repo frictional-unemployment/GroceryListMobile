@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const List = ({
-  name, qty, purchased, togglePurchased
+  name, qty, purchased, togglePurchased, startEdit
 }) => {
   const purchasedStyle = [styles.item];
 
@@ -17,12 +17,14 @@ const List = ({
     <TouchableHighlight
       style={purchasedStyle}
       onLongPress={() => {
-        console.log('long pres');
         console.log('longPress');
+        startEdit();
       }}
       onPress={() => {
         togglePurchased();
       }}
+      underlayColor="green"
+      activeOpacity={1}
     >
       <View style={styles.item}>
         <Text style={styles.itemName}>
