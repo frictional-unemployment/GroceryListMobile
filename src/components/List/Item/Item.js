@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const List = ({
   name, qty, purchased, togglePurchased, startEdit
@@ -14,7 +14,7 @@ const List = ({
   }
 
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={[purchasedStyle, purchased ? styles.purchased : styles.unPurchased]}
       onLongPress={() => {
         startEdit();
@@ -37,7 +37,7 @@ const List = ({
           <Text style={styles.horizontalRule} />
         ) : null }
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
@@ -45,7 +45,7 @@ let styles = StyleSheet.create({
   item: {
     height: 50,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -75,8 +75,8 @@ let styles = StyleSheet.create({
     borderWidth: 2
   },
   purchased: {
-    backgroundColor: 'grey',
-    textDecorationLine: 'line-through'
+    backgroundColor: 'lightgrey',
+    color: 'grey'
   },
   unPurchased: {
     backgroundColor: 'white',
@@ -88,7 +88,8 @@ let styles = StyleSheet.create({
     borderBottomWidth: 3,
     alignSelf: 'flex-start',
     backgroundColor: 'transparent',
-    position: 'absolute'
+    position: 'absolute',
+    borderColor: 'dimgrey'
   }
 });
 
