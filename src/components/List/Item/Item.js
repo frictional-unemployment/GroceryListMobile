@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const List = ({
   name, qty, purchased, togglePurchased, startEdit
@@ -47,10 +46,7 @@ const List = ({
 
 let styles = StyleSheet.create({
   item: {
-    // height: '25%',
     height: 50,
-    borderWidth: 1,
-    borderColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,7 +56,6 @@ let styles = StyleSheet.create({
   },
   itemName: {
     height: '100%',
-    // fontWeight: 'bold',
     fontSize: 30,
     overflow: 'hidden',
     left: '25%',
@@ -69,7 +64,6 @@ let styles = StyleSheet.create({
   },
   itemQty: {
     height: '100%',
-    // fontWeight: 'bold',
     marginLeft: 'auto',
     fontSize: 30,
     right: '25%'
