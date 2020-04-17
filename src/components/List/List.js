@@ -15,7 +15,7 @@ class List extends React.Component {
       newItemVisible: false,
       editItemVisible: false,
       editItemIndex: -1,
-      sortingStyle: 'alphabet'
+      sortingStyle: 'purchasedLast'
     };
   }
 
@@ -89,7 +89,7 @@ class List extends React.Component {
         items: sortedItems
       }
     });
-    this.setState
+    // this.setState(this.state.sortingStyle)
   }
 
   changeNewNameVisible(visibility) {
