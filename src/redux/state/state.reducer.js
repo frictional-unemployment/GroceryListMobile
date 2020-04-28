@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  currentList: [],
+  currentList: '',
   loading: false,
   error: false,
 };
@@ -9,7 +9,7 @@ const stateReducer = (state = INITIAL_STATE, action) => {
     case 'SET_CURRENT_LIST':
       return {
         ...state,
-        groceryList: action.payload,
+        currentList: action.payload,
       };
     case 'SET_LOADING_STATUS':
       return {
