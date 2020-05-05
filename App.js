@@ -8,7 +8,7 @@ import model from '../db/models';
 
 const { Navigator, Screen } = createStackNavigator();
 
-export default function App() {
+export default async function App() {
   return (
     <NavigationContainer>
       <Navigator>
@@ -19,7 +19,11 @@ export default function App() {
         <Screen
           name="List"
           component={List}
-          initialParams={{ listId: 1 }}
+          initialParams={
+            {
+              listData: await model.getListById(1)
+            }
+          }
         />
         <Screen name="ListOfLists" component={ListOfLists} />
       </Navigator>
