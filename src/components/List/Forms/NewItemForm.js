@@ -54,7 +54,17 @@ const newItemForm = (props) => {
         }}
         title="Add Item"
       />
-      <TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          if (name.trim().length === 0) {
+            setWarningVisible(true);
+            return;
+          }
+          props.commitNewItem({ name, qty });
+          props.closeModal();
+        }}
+      >
         <Text
           style={styles.buttonText}
         >
@@ -83,7 +93,9 @@ const styles = {
     alignItems: 'center'
   },
   button: {
-    width: '100%'
+    width: '100%',
+    height: 30,
+    backgroundColor: 'blue'
   },
   buttonText: {
     color: 'white'
