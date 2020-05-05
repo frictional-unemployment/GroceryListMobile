@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import List from './src/components/List/List';
 import ListOfLists from './src/components/ListOfLists/ListOfLists';
 import DBTest from './spec/db/db-page';
+import model from '../db/models';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -18,17 +19,39 @@ export default function App() {
         <Screen
           name="List"
           component={List}
-          initialParams={
-            {
-              listData: {
-                listName: 'defaultListName',
-                items: [{ name: 'item1', qty: '0', purchased: false }, { name: 'item2', qty: '0', purchased: false }, { name: 'item3', qty: '0', purchased: false }]
-              }
-            }
-          }
+          initialParams={{ listId: 1 }}
         />
         <Screen name="ListOfLists" component={ListOfLists} />
       </Navigator>
     </NavigationContainer>
   );
 }
+
+/**
+ * Database seeding for testing purposes.
+ */
+const sampleList = {
+  listName: 'Ralphs List',
+  items: [
+    {
+      name: 'item1',
+      qty: 12,
+      purchased: false
+    },
+    {
+      name: 'item2',
+      qty: 12,
+      purchased: true
+    },
+    {
+      name: 'item3',
+      qty: 12,
+      purchased: false
+    },
+  ]
+};
+
+model.createNewList(sampleList.listName)
+  .then(() => {
+    model.updateListByName(sampleList.listName, sampleList.items);
+  });
