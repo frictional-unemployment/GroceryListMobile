@@ -1,40 +1,5 @@
 import { AsyncStorage } from 'react-native';
 
-/**
-* Private function that retrieves the TRACKER object
-* @return {Object} tracker object from the database
-*/
-const getTracker = async () => {
-  let tracker = JSON.parse(await AsyncStorage.getItem('TRACKER'));
-
-  if (!tracker) {
-    // the tracker object is missing, then we create it
-    await AsyncStorage.setItem('TRACKER', JSON.stringify({ nextId: 1 }));
-    tracker = JSON.parse(await AsyncStorage.getItem('TRACKER'));
-  }
-
-  return tracker;
-};
-
-/**
-* Private function that sets the TRACKER object in the database
-* @param {Object} data object to set the TRACKER object to
-*/
-const setTracker = async (tracker) => {
-  await AsyncStorage.setItem('TRACKER', JSON.stringify(tracker));
-};
-
-/**
- * Private function that stringify id values
- * @param {any} listId
- */
-const stringifyListId = (listId) => {
-  if (typeof listId !== 'string') {
-    return JSON.stringify(listId);
-  }
-  return listId;
-};
-
 const modelFunctions = {
   /**
   * Creates a new list with the listName provided
@@ -65,6 +30,7 @@ const modelFunctions = {
 
     return AsyncStorage.setItem(JSON.stringify(tracker[listName]), JSON.stringify(list));
   },
+
   /**
   * Retrieves the list using the listId value
   * @param {string} listId    id value for the list in the database. will cast to string
@@ -74,6 +40,7 @@ const modelFunctions = {
     const id = stringifyListId(listId);
     return JSON.parse(await AsyncStorage.getItem(id));
   },
+
   /**
   * Retrieves the list using the list name. Utilizes getListById
   * @param {string} listId    id value for the list in the database
@@ -85,6 +52,7 @@ const modelFunctions = {
     // then retrieve the list
     return modelFunctions.getListById(listId);
   },
+
   /**
   * Updates the list with new items
   * @param {string} listId      id value for the list in the database
@@ -197,6 +165,15 @@ const modelFunctions = {
     return stringifyListId(tracker[listName]);
   },
   /**
+  * Gets the listName from the listId
+  * @param {string} listId  Id of the list.
+  * @return {string}        Name of the list.
+  */
+  getListNameFromId: async (listId) => {
+    const id = stringifyListId(listId);
+    return JSON.parse(await AsyncStorage.getItem(id)).listName;
+  },
+  /**
   * Gets the names of all the lists
   * @return {array} array of the lists of the names
   */
@@ -210,6 +187,41 @@ const modelFunctions = {
     await AsyncStorage.multiRemove(keys);
     return keys;
   }
+};
+
+/**
+* Private function that retrieves the TRACKER object
+* @return {Object} tracker object from the database
+*/
+const getTracker = async () => {
+  let tracker = JSON.parse(await AsyncStorage.getItem('TRACKER'));
+
+  if (!tracker) {
+    // the tracker object is missing, then we create it
+    await AsyncStorage.setItem('TRACKER', JSON.stringify({ nextId: 1 }));
+    tracker = JSON.parse(await AsyncStorage.getItem('TRACKER'));
+  }
+
+  return tracker;
+};
+
+/**
+* Private function that sets the TRACKER object in the database
+* @param {Object} data object to set the TRACKER object to
+*/
+const setTracker = async (tracker) => {
+  await AsyncStorage.setItem('TRACKER', JSON.stringify(tracker));
+};
+
+/**
+ * Private function that stringify id values
+ * @param {any} listId
+ */
+const stringifyListId = (listId) => {
+  if (typeof listId !== 'string') {
+    return JSON.stringify(listId);
+  }
+  return listId;
 };
 
 export default modelFunctions;
