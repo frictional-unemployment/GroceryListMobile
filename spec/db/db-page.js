@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Button, View, Text, TextInput, TouchableOpacity, StyleSheet, AsyncStorage } from 'react-native';
-import model from '../../db/models';
+import model from '../../db/model';
 
 const DBTest = () => {
   const [nextListId, setNextListId] = React.useState(1);
