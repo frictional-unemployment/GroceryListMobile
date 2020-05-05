@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import List from './src/components/List/List';
 import ListOfLists from './src/components/ListOfLists/ListOfLists';
+import DBTest from './spec/db/db-page';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -10,6 +11,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Navigator>
+        <Screen
+          name="DBTest"
+          component={DBTest}
+        />
         <Screen
           name="List"
           component={List}
