@@ -1,53 +1,96 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const List = ({ name, qty }) => {
+const List = ({
+  name, qty, purchased, togglePurchased, startEdit
+}) => {
+  const purchasedStyle = [styles.item];
+
+  if (purchased === true) {
+    purchasedStyle.push({ backgroundColor: 'grey' });
+  } else if (purchased === false) {
+    purchasedStyle.push({ backgroundColor: 'white' });
+  }
 
   return (
-    <TouchableHighlight
-      style={styles.item}
+    <TouchableOpacity
+      style={[purchasedStyle, purchased ? styles.purchased : styles.unPurchased]}
       onLongPress={() => {
-        console.log('long pres');
-        console.log('longPress');
+        startEdit();
       }}
-      onPress={() => console.log('short press')}
+      onPress={() => {
+        togglePurchased();
+      }}
+      underlayColor="green"
+      activeOpacity={0.2}
     >
-      <View style={styles.item}>
-        <Text style={styles.itemName}>
+      <View style={[styles.item, purchased ? styles.purchased : styles.unPurchased]}>
+        <Text
+          style={[styles.itemName, purchased ? styles.purchased : styles.unPurchased]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {name}
         </Text>
-        <Text style={styles.itemQty}>
-          Item Qty:
+        <Text style={[styles.itemQty, purchased ? styles.purchased : styles.unPurchased]}>
+          Qty:
           {qty}
         </Text>
+        { purchased ? (
+          <Text style={styles.horizontalRule} />
+        ) : null }
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
-const styles = {
+let styles = StyleSheet.create({
   item: {
     height: 50,
-    borderWidth: 1,
-    borderColor: 'black',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    flexWrap: 'nowrap',
+    position: 'relative',
   },
   itemName: {
-    fontWeight: 'bold',
+    height: '100%',
+    fontSize: 30,
+    overflow: 'hidden',
+    left: '25%',
+    backgroundColor: 'green',
+    width: '70%'
   },
   itemQty: {
-    fontWeight: 'bold',
+    height: '100%',
+    marginLeft: 'auto',
+    fontSize: 30,
+    right: '25%'
   },
   touch: {
     width: 100,
     height: 30,
     borderColor: 'black',
     borderWidth: 2
+  },
+  purchased: {
+    backgroundColor: 'lightgrey',
+    color: 'grey'
+  },
+  unPurchased: {
+    backgroundColor: 'white',
+    textDecorationLine: 'none'
+  },
+  horizontalRule: {
+    width: '100%',
+    height: '50%',
+    borderBottomWidth: 3,
+    alignSelf: 'flex-start',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    borderColor: 'dimgrey'
   }
-};
+});
 
 export default List;
